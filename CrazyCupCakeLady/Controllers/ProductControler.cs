@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CrazyCupCakeLady.Models;
+using CrazyCupCakeLady.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +11,17 @@ namespace CrazyCupCakeLady.Controllers
 {
     public class ProductControler : Controller
     {
+        private IProductRepository _productRepo;
+        public ProductControler(IProductRepository productRepository)
+        {
+            _productRepo = productRepository;
+        }
         // GET: ProductControler
         public ActionResult Index()
         {
-            return View();
+            List<Products> products = _productRepo.GetAllProducts();
+
+            return View(products);
         }
 
         // GET: ProductControler/Details/5
